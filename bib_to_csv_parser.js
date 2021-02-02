@@ -5,7 +5,6 @@ var currentLine = 0;
 const delimiter = '|'
 const inputFileName = './Primo_BibTeX_Export.bib'
 const outputFileName = 'output_' + Date.now() + '.csv'
-const chosen_properties = ['author', 'title', 'year', 'abstract'];
 const chosen_properties = ['abstract', 'title', 'year', 'author'];
 
 try {
@@ -19,8 +18,6 @@ try {
         if (lines[currentLine][0] === '@') {
             var currentObject = []
             while (lines[currentLine] !== '}') {
-                currentObject.push(lines[currentLine])
-                currentLine++;
                 var line = lines[currentLine]
                 if (line.substr(-2) === '},') {
                     currentObject.push(lines[currentLine])
