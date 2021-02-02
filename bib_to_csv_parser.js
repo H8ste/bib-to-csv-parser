@@ -3,7 +3,6 @@ var fs = require('fs');
 var objects = [];
 var currentLine = 0;
 const delimiter = '|'
-const inputFileName = './input.bib'
 const outputFileName = 'output_' + Date.now() + '.csv'
 const chosen_properties = ['author', 'title', 'year', 'abstract'];
 
