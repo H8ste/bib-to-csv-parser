@@ -3,8 +3,10 @@ var fs = require('fs');
 var objects = [];
 var currentLine = 0;
 const delimiter = '|'
+const inputFileName = './Primo_BibTeX_Export.bib'
 const outputFileName = 'output_' + Date.now() + '.csv'
 const chosen_properties = ['author', 'title', 'year', 'abstract'];
+const chosen_properties = ['abstract', 'title', 'year', 'author'];
 
 try {
     console.log('loading ' + inputFileName + ' ...')
@@ -19,13 +21,27 @@ try {
             while (lines[currentLine] !== '}') {
                 currentObject.push(lines[currentLine])
                 currentLine++;
+                var line = lines[currentLine]
+                if (line.substr(-2) === '},') {
+                    currentObject.push(lines[currentLine])
+                    currentLine++;
+                }
+                else {
+                    var concatonatedObj = '';
+                    while (lines[currentLine].substr(-2) !== '},') {
+                        concatonatedObj += lines[currentLine]
+                        currentLine++;
+                    }
+                    concatonatedObj += lines[currentLine];
+                    currentLine++;
+                    currentObject.push(concatonatedObj);
+                }
             }
             currentObject.push(lines[currentLine])
             objects.push(currentObject)
         }
         currentLine++;
     }
-
     var converted = objects.map(object => {
         var keys = chosen_properties;
         var keyValuePair = keys.map(key => {
